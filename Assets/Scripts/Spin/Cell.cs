@@ -12,8 +12,8 @@ public class Cell : MonoBehaviour
     {
         pos = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
-        _image.color = new Color(Random.Range(0,1.0f),Random.Range(0,1.0f),Random.Range(0,1.0f));
         startPosition = pos.anchoredPosition;
+        _image.color = SpinStarter.ST.collors[Random.RandomRange(0, SpinStarter.ST.collors.Length)];
     }
 
     private void Update()
@@ -39,7 +39,19 @@ public class Cell : MonoBehaviour
 
     public void StopSpin()
     {
+        ColorsAdd();
         transform.position = new Vector2(transform.position.x, 30);
         isTeleported = true;
+    }
+
+    private void ColorsAdd()
+    {
+        _image.color = SpinStarter.ST.collors[SpinStarter.ST.arCell[SpinStarter.ST.currentR,SpinStarter.ST.currentC]];
+        SpinStarter.ST.currentC++;
+        if (SpinStarter.ST.currentC >= SpinStarter.ST.arCell.GetLength(0))
+        {
+            SpinStarter.ST.currentC = 0;
+            SpinStarter.ST.currentR++;
+        }
     }
 }
